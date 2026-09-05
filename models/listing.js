@@ -1,90 +1,76 @@
-const mongoose =require("mongoose");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-//Create listingSchema tittle,desciption,image,price,location,country,color these are present in listeningSchema
-
-
+const Review = require("./review.js");
 
 const listingSchema = new Schema({
-title: {
-        type:String,
-        required:true,
-},
-    description:String,
- image: {
-  //   type: String,
-  //   default: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=800&q=60",
-  //   set: v => (v === "" ? "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=800&q=60" : v)
-
-       url:String,
-       filename:String,
-   },
-
-
-
-
-// const listingSchema = new mongoose.Schema({
-//   title: {
-//     type: String,
-//     required: true
-//   },
-//   description: String,
-//   image: String,
-//   price: Number,
-//   location: String,
-//   country: String
-// });
-
-
-// image: {
-    //     type:String,
-    //     // default:
-    //     //     "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fhotel&psig=AOvVaw1P0LgVLLSH9pWIken1uskG&ust=1764446587393000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCKiF6fTRlZEDFQAAAAAdAAAAABAL",
-    //     set:(v) =>
-    //         v === "" 
-    //     ? "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fhotel&psig=AOvVaw1P0LgVLLSH9pWIken1uskG&ust=1764446587393000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCKiF6fTRlZEDFQAAAAAdAAAAABAL"
-    //      : v,
-    // },
-    price:Number,
-    location:String,
-    country:String,
-    color:String,
-    reviews:[
-      {
-        type:Schema.Types.ObjectId,
-        ref:"Review",
-
-      },
+    title: {
+        type: String,
+        required: true,
+    },
+    description: String,
+    image: {
+        url: {
+            type: String,
+            default: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=800&q=60"
+        },
+        filename: {
+            type: String,
+            default: "listingimage"
+        },
+    },
+    price: {
+        type: Number,
+        default: 0,
+    },
+    location: String,
+    country: String,
+    category: {
+        type: String,
+        enum: [
+            "Trending",
+            "Rooms",
+            "Iconic Cities",
+            "Mountains",
+            "Castles",
+            "Amazing Pools",
+            "Camping",
+            "Farms",
+            "Arctic",
+            "Boats",
+            "Domes"
+        ],
+        default: "Trending",
+    },
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Review",
+        },
     ],
     owner: {
-             
-      type:Schema.Types.ObjectId,
-      ref:"User",
+        type: Schema.Types.ObjectId,
+        ref: "User",
     },
-
-   geometry:{
-    type:{
-      type:String,
-      enum:['Point'],
-      required:true,
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point',
+        },
+        coordinates: {
+            type: [Number],
+            default: [77.2090, 28.6139], // Default coordinates (Delhi) fallback
+        },
     },
-    coordinates: {
-      type:[Number],
-      required:true,
-
-      },
-   },
 });
 
+// Cascade delete reviews when a listing is deleted
+listingSchema.post("findOneAndDelete", async (listing) => {
+    if (listing) {
+        await Review.deleteMany({ _id: { $in: listing.reviews } });
+    }
+});
 
-
-
-//create model by using listingSchema
 const Listing = mongoose.model("Listing", listingSchema);
 
-/*module.exports = Listing; ka matlab hota hai:
- Ye file jis variable ko bahar bhejna chahti hai, wo Listing hai.
-Short me:
-👉 Is file ke bahar Listing ko use kar sakte ho.
-👉 Dusri file me require() karke Listing ko import kar loge. */
 module.exports = Listing;
-

@@ -1,9 +1,18 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row">
-    <div class="alert alert-danger col-6 offset-3" role="alert">
-        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-  <div>
-        <h4 class="alert-heading"><%=message %></h4>
-  A simple danger alert—check it out!
-</div>
+
+<div class="row my-5 justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6 text-center">
+    <div class="card border-0 shadow-sm rounded-4 p-5">
+      <div class="mb-3">
+        <i class="fa-solid fa-triangle-exclamation text-danger fa-4x"></i>
+      </div>
+      <h2 class="fw-bold mb-2">Oops! Something went wrong</h2>
+      <p class="text-secondary mb-4 fs-5"><%= message || "We couldn't find the page you were looking for." %></p>
+      <div>
+        <a href="/listings" class="btn btn-primary-theme rounded-pill px-4 py-2">
+          <i class="fa-solid fa-compass me-2"></i>Back to Explore
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

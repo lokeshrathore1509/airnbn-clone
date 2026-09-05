@@ -1,133 +1,134 @@
-<%= layout("/layouts/boilerplate") %>
+<% layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-  <div class="col-8 offset-2">
-
-    <h3>Create a New Listing</h3>
-
-    <form method="POST" action="/listings"  novalidate class="needs-validation" enctype = "multipart/form-data" >
-
-      <!-- Title -->
-      <div class="mb-3">
-        <label class="form-label">Title</label>
-        <input
-          type="text"
-          name="listing[title]"
-          class="form-control"
-          placeholder="Add a catchy title"
-          required
-        >
-        <div class="valid-feedback">Title looks good</div>
-      </div>
-
-      <!-- Description -->
-      <div class="mb-3">
-        <label class="form-label">Description</label>
-        <textarea
-          name="listing[description]"
-          class="form-control"
-          placeholder="Write description"
-          required
-        ></textarea>
-        <div class="invalid-feedback">Please enter the description</div>
-      </div>
-
-      <!-- Image -->
-      <!-- <div class="mb-3">
-        <label class="form-label">Image Links</label>
-        <input
-          type="text"
-          name="listing[image]"
-          class="form-control"
-          placeholder="Enter image URL"
-          required
-        >
-        <div class="invalid-feedback">Please enter image link</div>
-      </div> -->
-
-
-
-<div class="mb-3">
-            <label for = "image" class="form-label" class="form-label">Upload Listing Image </label>
-             <input name="listing[image]" type="file" class="form-control">
-         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-      <div class="row">
-
-        <!-- Price -->
-        <div class="mb-3 col-md-4">
-          <label class="form-label">Price</label>
-          <input
-            type="number"
-            name="listing[price]"
-            class="form-control"
-            placeholder="1200"
-            min="1"
-            required
-          >
-          <div class="invalid-feedback">Please enter a valid price</div>
+<div class="row my-4">
+  <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+    <div class="form-card">
+      <div class="d-flex align-items-center gap-2 mb-4">
+        <i class="fa-solid fa-house-chimney text-danger fs-3"></i>
+        <div>
+          <h2 class="fw-bold mb-0">Airbnb your home</h2>
+          <p class="text-secondary small mb-0">List your space on Wanderlust and start earning</p>
         </div>
+      </div>
 
-        <!-- Country -->
-        <div class="mb-3 col-md-8">
-          <label class="form-label">Country</label>
+      <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+        
+        <!-- Title -->
+        <div class="mb-3">
+          <label for="title" class="form-label">Catchy Title</label>
           <input
             type="text"
-            name="listing[country]"
+            id="title"
+            name="listing[title]"
             class="form-control"
-            placeholder="India"
+            placeholder="e.g. Luxurious Beachfront Villa with Infinity Pool"
             required
           >
-          <div class="invalid-feedback">Please enter country name</div>
+          <div class="valid-feedback">Looks great!</div>
+          <div class="invalid-feedback">Please provide a catchy listing title.</div>
         </div>
 
-      </div>
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            id="description"
+            name="listing[description]"
+            class="form-control"
+            rows="4"
+            placeholder="Describe what makes your space unique, amenities, and surroundings..."
+            required
+          ></textarea>
+          <div class="invalid-feedback">Please write a brief description of your property.</div>
+        </div>
 
-      <!-- Location -->
-      <div class="mb-3">
-        <label class="form-label">Location</label>
-        <input
-          type="text"
-          name="listing[location]"
-          class="form-control"
-          placeholder="Jaipur, Rajasthan"
-          required
-        >
-        <div class="invalid-feedback">Please enter location</div>
-      </div>
+        <!-- Category & Price Row -->
+        <div class="row g-3 mb-3">
+          <div class="col-12 col-md-6">
+            <label for="category" class="form-label">Category</label>
+            <select name="listing[category]" id="category" class="form-select" required>
+              <option value="Trending" selected>🔥 Trending</option>
+              <option value="Rooms">🛏️ Rooms</option>
+              <option value="Iconic Cities">🏙️ Iconic Cities</option>
+              <option value="Mountains">⛰️ Mountains</option>
+              <option value="Castles">🏰 Castles</option>
+              <option value="Amazing Pools">🏊 Amazing Pools</option>
+              <option value="Camping">⛺ Camping</option>
+              <option value="Farms">🚜 Farms</option>
+              <option value="Arctic">❄️ Arctic</option>
+              <option value="Boats">⛵ Boats</option>
+            </select>
+          </div>
 
-      <!-- Button -->
-      <button type="submit" class="btn btn-dark add-btn mt-3">Add</button>
+          <div class="col-12 col-md-6">
+            <label for="price" class="form-label">Price per Night (&#8377;)</label>
+            <div class="input-group">
+              <span class="input-group-text bg-white">&#8377;</span>
+              <input
+                type="number"
+                id="price"
+                name="listing[price]"
+                class="form-control"
+                placeholder="2500"
+                min="100"
+                required
+              >
+            </div>
+            <div class="invalid-feedback">Please enter a valid price.</div>
+          </div>
+        </div>
 
-    </form>
+        <!-- Image Upload -->
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Listing Photo</label>
+          <input 
+            name="listing[image]" 
+            id="image" 
+            type="file" 
+            class="form-control"
+            accept="image/png, image/jpeg, image/jpg"
+          >
+          <small class="text-muted">High-resolution JPEG or PNG photos look best. If no photo is selected, a curated demo photo will be assigned.</small>
+        </div>
 
+        <!-- Location & Country Row -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-md-6">
+            <label for="location" class="form-label">City / Destination</label>
+            <input
+              type="text"
+              id="location"
+              name="listing[location]"
+              class="form-control"
+              placeholder="e.g. Jaipur, Rajasthan"
+              required
+            >
+            <div class="invalid-feedback">Please specify the location.</div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="country" class="form-label">Country</label>
+            <input
+              type="text"
+              id="country"
+              name="listing[country]"
+              class="form-control"
+              placeholder="e.g. India"
+              required
+            >
+            <div class="invalid-feedback">Please enter the country name.</div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex gap-3 align-items-center">
+          <button type="submit" class="btn btn-primary-theme rounded-pill px-4">
+            <i class="fa-solid fa-plus me-1"></i>Publish Listing
+          </button>
+          <a href="/listings" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
+        </div>
+
+      </form>
+    </div>
   </div>
 </div>
-
-<!-- Bootstrap validation script -->
-<script>
-(() => {
-  'use strict'
-  const forms = document.querySelectorAll('.needs-validation')
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()
-</script>

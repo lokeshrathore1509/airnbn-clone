@@ -1,122 +1,149 @@
-<link rel="icon"type="image/png"href="https://img.icons8.com/color/1200/airbnb.jpg">
+<% layout("/layouts/boilerplate") %>
 
-<% layout("/layouts/boilerplate")%>
-
-    
-
-
-
+<!-- Category Filters Bar & Tax Toggle -->
+<div class="filter-container">
     <div id="filters">
-        <div class="filter">
-           <div> <i class="fa-solid fa-fire"></i></div>
-            <p>Trending</p> 
-        </div>
-       
-         <div class="filter">
-           <div> <i class="fa-solid fa-bed"></i></div>
-            <p>Rooms</p> 
-        </div>
+        <a href="/listings" class="filter-item <%= (typeof activeCategory === 'undefined' || activeCategory === 'All') ? 'active' : '' %>">
+            <div><i class="fa-solid fa-border-all"></i></div>
+            <span>All</span>
+        </a>
 
+        <a href="/listings?category=Trending" class="filter-item <%= (typeof activeCategory !== 'undefined' && activeCategory === 'Trending') ? 'active' : '' %>">
+            <div><i class="fa-solid fa-fire"></i></div>
+            <span>Trending</span>
+        </a>
 
-<div class="filter">
-           <div> <i class="fa-solid fa-mountain-city"></i></div>
-            <p>Iconic Cities</p> 
-        </div>
-       
-         <div class="filter">
-           <div> <i class="fa-solid fa-mountain"></i></div>
-            <p>Mountains</p> 
-        </div>
+        <a href="/listings?category=Rooms" class="filter-item <%= (typeof activeCategory !== 'undefined' && activeCategory === 'Rooms') ? 'active' : '' %>">
+            <div><i class="fa-solid fa-bed"></i></div>
+            <span>Rooms</span>
+        </a>
 
+        <a href="/listings?category=Iconic Cities" class="filter-item <%= (typeof activeCategory !== 'undefined' && activeCategory === 'Iconic Cities') ? 'active' : '' %>">
+            <div><i class="fa-solid fa-mountain-city"></i></div>
+            <span>Iconic Cities</span>
+        </a>
 
+        <a href="/listings?category=Mountains" class="filter-item <%= (typeof activeCategory !== 'undefined' && activeCategory === 'Mountains') ? 'active' : '' %>">
+            <div><i class="fa-solid fa-mountain"></i></div>
+            <span>Mountains</span>
+        </a>
 
-        <div class="filter">
-           <div><i class="fa-brands fa-fort-awesome"></i></div>
-            <p>Castles</p> 
-        </div>
-       
-         <div class="filter">
-           <div> <i class="fa-solid fa-person-swimming"></i></div>
-            <p>Amazing Pools</p> 
-        </div>
+        <a href="/listings?category=Castles" class="filter-item <%= (typeof activeCategory !== 'undefined' && activeCategory === 'Castles') ? 'active' : '' %>">
+            <div><i class="fa-brands fa-fort-awesome"></i></div>
+            <span>Castles</span>
+        </a>
 
+        <a href="/listings?category=Amazing Pools" class="filter-item <%= (typeof activeCategory !== 'undefined' && activeCategory === 'Amazing Pools') ? 'active' : '' %>">
+            <div><i class="fa-solid fa-person-swimming"></i></div>
+            <span>Amazing Pools</span>
+        </a>
 
-        <div class="filter">
-           <div><i class="fa-solid fa-campground"></i></div>
-            <p>Camping</p> 
-        </div>
-       
-         <div class="filter">
-           <div> <i class="fa-solid fa-cow"></i></div>
-            <p>Farms</p> 
-        </div>
+        <a href="/listings?category=Camping" class="filter-item <%= (typeof activeCategory !== 'undefined' && activeCategory === 'Camping') ? 'active' : '' %>">
+            <div><i class="fa-solid fa-campground"></i></div>
+            <span>Camping</span>
+        </a>
 
-        <div class="filter">
-           <div> <i class="fa-solid fa-snowflake"></i></div>
-            <p>Arctic</p> 
-        </div>
+        <a href="/listings?category=Farms" class="filter-item <%= (typeof activeCategory !== 'undefined' && activeCategory === 'Farms') ? 'active' : '' %>">
+            <div><i class="fa-solid fa-cow"></i></div>
+            <span>Farms</span>
+        </a>
 
-  <div class="filter">
-           <div> <i class="fa-solid fa-igloo"></i></div>
-            <p>Igloo</p> 
-        </div>
+        <a href="/listings?category=Arctic" class="filter-item <%= (typeof activeCategory !== 'undefined' && activeCategory === 'Arctic') ? 'active' : '' %>">
+            <div><i class="fa-regular fa-snowflake"></i></div>
+            <span>Arctic</span>
+        </a>
 
-        <div class="filter">
-           <div> <i class="fa-solid fa-ship"></i></div>
-            <p>Boats</p> 
-        </div>
-
-
-
-
-
-
-
-
-
-
-<div class="tax-toggle">
-    <div class="form-check-reverse form-switch">
-  <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-  <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
-</div>
-</div>
-
-
+        <a href="/listings?category=Boats" class="filter-item <%= (typeof activeCategory !== 'undefined' && activeCategory === 'Boats') ? 'active' : '' %>">
+            <div><i class="fa-solid fa-ship"></i></div>
+            <span>Boats</span>
+        </a>
     </div>
 
-
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-1 mt-3">
-    <% for(let listing of allListings) { %>
-        <a href="/listings/<%= listing._id %>"class="listing-link">
-   
-<div class="card col listing-card">
- <img src="<%=listing.image.url%>" class="card-img-top" alt="listing_image"style="height: 20rem"/>
-  <div class="card-img-overlay"></div>
-  <div class="card-body">
-    
-    <p class="card-text">
-        <b> <%=listing.title %> </b><br/>
-         
-         <%=listing.price ? listing.price.toLocaleString("en-IN"):
-         "0" %> /night
- </p>
-       
-    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-  </div>
+    <!-- Tax Toggle Switch -->
+    <div class="tax-toggle-wrapper">
+        <div class="tax-toggle">
+            <div class="form-check form-switch m-0 d-flex align-items-center gap-2">
+                <input class="form-check-input mt-0" type="checkbox" role="switch" id="switchCheckDefault">
+                <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+            </div>
+        </div>
+    </div>
 </div>
 
-</a>
- <%} %>
+<!-- Search / Filter Results Subheader -->
+<% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h5 class="fw-bold mb-0">Search results for "<span class="text-danger"><%= searchQuery %></span>"</h5>
+        <a href="/listings" class="btn btn-sm btn-outline-secondary rounded-pill">Clear Search</a>
+    </div>
+<% } else if (typeof activeCategory !== 'undefined' && activeCategory !== 'All') { %>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h5 class="fw-bold mb-0">Category: <span class="text-danger"><%= activeCategory %></span></h5>
+        <a href="/listings" class="btn btn-sm btn-outline-secondary rounded-pill">View All</a>
+    </div>
+<% } %>
 
-</div>
+<!-- Listings Grid -->
+<% if (allListings && allListings.length > 0) { %>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <% for (let listing of allListings) { %>
+            <div class="col">
+                <div class="listing-card">
+                    <a href="/listings/<%= listing._id %>" class="listing-link">
+                        <div class="img-container">
+                            <img 
+                                src="<%= (listing.image && listing.image.url) ? listing.image.url : 'https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=800&q=60' %>" 
+                                class="card-img-top" 
+                                alt="<%= listing.title %>"
+                                loading="lazy"
+                            />
+                            
+                            <!-- Wishlist Heart Button -->
+                            <button class="wishlist-btn" type="button" aria-label="Add to wishlist" title="Save to wishlist">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
 
-   
+                            <!-- Category Badge -->
+                            <% if (listing.category) { %>
+                                <span class="category-tag"><%= listing.category %></span>
+                            <% } %>
+                        </div>
 
-<script>
-    let taxSwitch = document.getElement("switchCheckDefault");
-    texSwitch.addEventListner("click",()=>{
-        console.log("clicked");
-    })
-</script>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="listing-card-title flex-grow-1"><%= listing.title %></div>
+                                <div class="d-flex align-items-center gap-1 ms-2 small fw-bold">
+                                    <i class="fa-solid fa-star text-dark small"></i>
+                                    <span><%= listing.reviews && listing.reviews.length ? (listing.reviews.reduce((acc, r) => acc + (r.ratings || 5), 0) / listing.reviews.length).toFixed(1) : 'New' %></span>
+                                </div>
+                            </div>
+                            
+                            <div class="listing-location text-truncate">
+                                <%= listing.location %>, <%= listing.country %>
+                            </div>
 
+                            <div class="listing-price">
+                                <span>&#8377;</span>
+                                <span class="price-amount base-price" data-raw-price="<%= listing.price || 0 %>">
+                                    <%= listing.price ? listing.price.toLocaleString("en-IN") : "0" %>
+                                </span>
+                                <span class="text-secondary fw-normal"> / night</span>
+                                <span class="tax-badge">+18% GST</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        <% } %>
+    </div>
+<% } else { %>
+    <!-- Empty State -->
+    <div class="empty-state-box">
+        <i class="fa-solid fa-compass-drafting fa-3x text-secondary mb-3"></i>
+        <h4 class="fw-bold">No destinations found</h4>
+        <p class="text-muted mb-4">We couldn't find any listings matching your search or category filter. Try clearing filters or searching for something else!</p>
+        <a href="/listings" class="btn btn-primary-theme rounded-pill px-4">
+            <i class="fa-solid fa-rotate-left me-2"></i>Reset & Explore All Listings
+        </a>
+    </div>
+<% } %>

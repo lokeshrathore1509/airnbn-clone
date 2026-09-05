@@ -1,9 +1,11 @@
 {
   "name": "major-project-apna-college",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Wanderlust - Airbnb Clone Web Application",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
